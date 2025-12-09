@@ -1,17 +1,22 @@
 exports.CartPage = class CartPage {
   constructor(page) {
     this.page = page;
+    this.cartItems = page.locator('.cart_item');
     this.checkoutButton = page.locator('#checkout');
-    this.cartItems = page.locator('.cart_item .inventory_item_name');
   }
 
   async verifyProductInCart(productName) {
-    await this.cartItems.first().waitFor({ state: 'visible' });
-    const items = await this.cartItems.allInnerTexts();
-    return items.includes(productName);
+    const item = this.cartItems.filter({ hasText: productName });
+    return await item.count() > 0;
+  }
+
+  async removeProduct(productName) {
+    const item = this.cartItems.filter({ hasText: productName });
+    const removeButton = item.locator('button'); // automatic remove button
+    await removeButton.click();
   }
 
   async proceedToCheckout() {
     await this.checkoutButton.click();
   }
-}
+};

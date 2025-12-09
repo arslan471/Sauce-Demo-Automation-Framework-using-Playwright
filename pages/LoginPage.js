@@ -4,7 +4,6 @@ exports.LoginPage = class LoginPage {
     this.usernameInput = page.locator('#user-name');
     this.passwordInput = page.locator('#password');
     this.loginButton = page.locator('#login-button');
-    this.errorMessage = page.locator('h3[data-test="error"]');
   }
 
   async goto() {
@@ -16,8 +15,4 @@ exports.LoginPage = class LoginPage {
     await this.passwordInput.fill(password);
     await this.loginButton.click();
   }
-
-  async getErrorMessage() {
-    return await this.errorMessage.textContent();
-  }
-}
+};

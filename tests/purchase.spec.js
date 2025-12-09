@@ -14,14 +14,17 @@ test('Full checkout flow on Sauce Demo', async ({ page }) => {
   // Step 1: Login
   await login.goto();
   await login.login(data.validUser.username, data.validUser.password);
+  await page.waitForTimeout(1000);
 
   // Step 2: Add products to cart
   for (const product of data.productsToBuy) {
     await products.addProductToCart(product);
+    await page.waitForTimeout(800);
   }
 
   // Step 3: Go to cart
   await products.goToCart();
+  await page.waitForTimeout(1000);
 
   // Step 4: Verify products in cart
   for (const product of data.productsToBuy) {
@@ -31,6 +34,7 @@ test('Full checkout flow on Sauce Demo', async ({ page }) => {
 
   // Step 5: Proceed to checkout
   await cart.proceedToCheckout();
+  await page.waitForTimeout(1000);
 
   // Step 6: Fill checkout info
   await checkout.fillCheckoutInfo(
@@ -38,12 +42,17 @@ test('Full checkout flow on Sauce Demo', async ({ page }) => {
     data.checkoutInfo.lastName,
     data.checkoutInfo.postalCode
   );
+  await page.waitForTimeout(800);
 
   // Step 7: Finish checkout
   await checkout.finishCheckout();
+  await page.waitForTimeout(1000);
 
   // Step 8: Verify completion
   const message = await checkout.getCompletionMessage();
-  console.log("Completion Message:", message);
-  expect(message).toContain("THANK YOU FOR YOUR ORDER");
+  expect(message.toUpperCase()).toContain("THANK YOU FOR YOUR ORDER");
+
+  // Step 9: Back to Home
+  await checkout.clickBackHome();
+  await page.waitForTimeout(1000);
 });

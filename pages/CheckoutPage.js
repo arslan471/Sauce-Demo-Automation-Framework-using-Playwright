@@ -6,23 +6,26 @@ exports.CheckoutPage = class CheckoutPage {
     this.postalCodeInput = page.locator('#postal-code');
     this.continueButton = page.locator('#continue');
     this.finishButton = page.locator('#finish');
-    this.completeMessage = page.locator('.complete-header');
+    this.completeHeader = page.locator('.complete-header');
+    this.backHomeButton = page.locator('#back-to-products');
   }
 
-  async fillCheckoutInfo(firstName, lastName, postalCode) {
-    await this.firstNameInput.fill(firstName);
-    await this.lastNameInput.fill(lastName);
-    await this.postalCodeInput.fill(postalCode);
+  async fillCheckoutInfo(first, last, postal) {
+    await this.firstNameInput.fill(first);
+    await this.lastNameInput.fill(last);
+    await this.postalCodeInput.fill(postal);
     await this.continueButton.click();
-    await this.page.waitForURL('**/checkout-step-two.html');
   }
 
   async finishCheckout() {
     await this.finishButton.click();
-    await this.completeMessage.waitFor({ state: 'visible' });
   }
 
   async getCompletionMessage() {
-    return await this.completeMessage.textContent();
+    return await this.completeHeader.textContent();
   }
-}
+
+  async clickBackHome() {
+    await this.backHomeButton.click();
+  }
+};

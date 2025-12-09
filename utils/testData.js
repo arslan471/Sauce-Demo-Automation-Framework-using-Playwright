@@ -3,10 +3,13 @@ module.exports = {
     username: "standard_user",
     password: "secret_sauce"
   },
-  productsToBuy: ["Sauce Labs Backpack", "Sauce Labs Bike Light"],
+  productsToBuy: [
+    "Sauce Labs Backpack",
+    "Sauce Labs Bike Light"
+  ],
   checkoutInfo: {
-    firstName: "John",
-    lastName: "Doe",
-    postalCode: "12345"
+    firstName: "Arslan",
+    lastName: "Jabbar",
+    postalCode: "54000"
   }
 };
